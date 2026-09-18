@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Short URL Created</title>
+    <style>
+        :root {
+            font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+            color: #172033;
+            background: #eef2ff;
+        }
+
+        body {
+            display: grid;
+            min-height: 100vh;
+            margin: 0;
+            place-items: center;
+            padding: 24px;
+            background: radial-gradient(circle at 15% 15%, #c7d2fe, transparent 35%), #eef2ff;
+        }
+
+        main {
+            width: min(100%, 560px);
+            padding: 42px;
+            border: 1px solid #ffffff;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: 0 24px 60px rgba(44, 56, 105, 0.16);
+        }
+
+        h1 {
+            margin: 0 0 22px;
+            color: #111827;
+        }
+
+        .result {
+            padding: 20px;
+            border: 1px solid #c7d2fe;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #eef2ff, #f0fdfa);
+        }
+
+        .result p {
+            margin: 0 0 12px;
+            overflow-wrap: anywhere;
+        }
+
+        a {
+            color: #4338ca;
+            font-weight: 700;
+            overflow-wrap: anywhere;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 22px;
+            color: #647089;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <h1>Short URL Created</h1>
+    <section class="result">
+        <p><strong>Original URL:</strong>
+            <a th:href="${shortenURLResponse.originalURL}"
+               th:text="${shortenURLResponse.originalURL}"></a>
+        </p>
+        <p><strong>Short URL:</strong>
+            <a th:href="${shortenURLResponse.shortURL}"
+               th:text="${shortenURLResponse.shortURL}"></a>
+        </p>
+    </section>
+    <a class="back-link" th:href="@{/}">Shorten another URL</a>
+</main>
+</body>
+</html>
