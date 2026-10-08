@@ -5,18 +5,23 @@ import com.spring.urlshortner.exception.MaxCollisionException;
 import com.spring.urlshortner.model.ShortenURLRequest;
 import com.spring.urlshortner.model.ShortenURLResponse;
 import com.spring.urlshortner.service.URLShortnerService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
 
 @Controller
 public class ShortURLController {
@@ -27,7 +32,7 @@ public class ShortURLController {
         this.urlShortnerService = urlShortnerService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/urls")
     public String showForm(Model model) {
         model.addAttribute("shortenURLRequest", new ShortenURLRequest());
         return "index";
@@ -66,5 +71,11 @@ public class ShortURLController {
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "Short URL not found"));
         return "redirect:" + originalURL;
+    }
+
+    @GetMapping("/token")
+    @ResponseBody
+    public CsrfToken getToken(HttpServletRequest request){
+        return (CsrfToken) request.getAttribute("_csrf");
     }
 }
