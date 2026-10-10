@@ -13,6 +13,9 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+/**
+ * Persists a short code, its original URL, and associated timestamps.
+ */
 @Entity
 @Table(name = "short_urls")
 @Getter
@@ -35,6 +38,9 @@ public class ShortURL {
 
     private LocalDateTime expiresAt;
 
+    /**
+     * Initializes the creation timestamp when the entity is first persisted.
+     */
     @PrePersist
     protected void onCreate() {
         if (createdAt == null) {

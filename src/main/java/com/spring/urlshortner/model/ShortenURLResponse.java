@@ -7,6 +7,9 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+/**
+ * Represents the short URL and its source URL and lifecycle timestamps.
+ */
 @Getter
 @Setter
 @NoArgsConstructor

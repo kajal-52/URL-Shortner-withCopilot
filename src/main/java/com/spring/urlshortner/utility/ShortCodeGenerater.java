@@ -4,6 +4,9 @@ import org.springframework.stereotype.Component;
 
 import java.security.SecureRandom;
 
+/**
+ * Generates random six-character alphanumeric codes for shortened URLs.
+ */
 @Component
 public class ShortCodeGenerater {
 

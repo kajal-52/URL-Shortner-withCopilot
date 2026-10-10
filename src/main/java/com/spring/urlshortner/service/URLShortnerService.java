@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.SecureRandom;
 import java.util.Optional;
 
+/**
+ * Creates short URL records with unique codes and resolves codes to original URLs.
+ */
 @Service
 @Transactional
 public class URLShortnerService {
@@ -19,6 +22,12 @@ public class URLShortnerService {
     private static final int MAX_COLLISIONS = 10;
 
 
+    /**
+     * Creates the service with URL persistence and short-code generation dependencies.
+     *
+     * @param shortUrlRepository repository for shortened URL records
+     * @param shortCodeGenerater generator for candidate codes
+     */
     public URLShortnerService(ShortUrlRepository shortUrlRepository, ShortCodeGenerater shortCodeGenerater) {
         this.shortUrlRepository = shortUrlRepository;
         this.shortCodeGenerater = shortCodeGenerater;
@@ -29,6 +38,7 @@ public class URLShortnerService {
      *
      * @param originalURL the URL to shorten
      * @return the existing or newly saved short URL
+     * @throws MaxCollisionException if a unique code cannot be generated
      */
     public ShortURL createShortURL(String originalURL) throws MaxCollisionException {
         Optional<ShortURL> existingURL = shortUrlRepository.findByOriginalURL(originalURL);
@@ -46,6 +56,7 @@ public class URLShortnerService {
      * Generates a short code and retries when the code is already in use.
      *
      * @return a unique six-character short code
+     * @throws MaxCollisionException if repeated generated codes cannot be made unique
      */
     private String generateUniqueShortCode() throws MaxCollisionException {
         int attempts = 0;

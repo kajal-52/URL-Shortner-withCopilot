@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.URL;
 
+/**
+ * Carries the original URL submitted for shortening.
+ */
 @Getter
 @Setter
 @NoArgsConstructor
