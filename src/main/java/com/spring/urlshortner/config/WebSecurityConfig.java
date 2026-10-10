@@ -56,7 +56,7 @@ public class WebSecurityConfig {
                                 .requestMatchers("/register","/login").permitAll()
                                 .anyRequest().authenticated()
                 )
-                .httpBasic(Customizer.withDefaults())
+//                .httpBasic(Customizer.withDefaults())
                 .addFilterBefore(jwtAuthenticationFilter,
                         UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
